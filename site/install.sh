@@ -16,7 +16,6 @@ mkdir -p letsencrypt/live/$domain/
 read -p 'Enter repository url: ' rep
 mkdir home/$user/$domain/$user
 git clone $rep home/$user/$domain/$user/.
-sudo docker compose exec nginx sh -c "cd /home/$user/$domain/$user/ && bash install.sh"
 
 cp data/certs/domain.ir.cert letsencrypt/live/$domain/fullchain.pem;
 cp data/certs/domain.ir.key letsencrypt/live/$domain/privkey.pem;
@@ -25,3 +24,5 @@ sudo docker compose up -d
 #sudo rm -rf letsencrypt/live/$domain
 sudo docker compose exec nginx certbot certonly --webroot -w /home/$user/$domain/public_html/ -d $domain -d www.$domain
 sudo docker compose restart nginx
+
+sudo docker compose exec nginx sh -c "cd /home/$user/$domain/$user/ && bash install.sh"

@@ -36,7 +36,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-        MYSQL_DATABASE: test
+        MYSQL_DATABASE: partak
         MYSQL_USER: root
         MYSQL_PASSWORD: 12c
         MYSQL_ROOT_PASSWORD: 12c

@@ -2,9 +2,8 @@ chmod 0777 -R home/pma/tmp/
 read -p 'Username: ' user
 read -p 'Domain without www: ' domain
 echo $user : $domain;
-(cd home/$user/$domain/ && ln -s $user/public public_html)
-
 mkdir -p home/$user/$domain
+(cd home/$user/$domain/ && ln -s $user/public public_html)
 mkdir -p home/$user/tmp
 cp php81/sample/partakbi.ir.conf php81/php-fpm.d/$domain.conf
 sed -i 's\partak\'"$user"'\g' php81/php-fpm.d/$domain.conf

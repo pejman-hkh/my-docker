@@ -1,3 +1,4 @@
+chmod 0777 -R home/pma/tmp/
 read -p 'Username: ' user
 read -p 'Domain without www: ' domain
 echo $user : $domain;

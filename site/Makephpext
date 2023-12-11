@@ -1,0 +1,12 @@
+cd /root/;\
+apk add git;\
+git clone https://github.com/cataphract/php-rar.git;\
+apk add php81-dev;\
+cd php-rar/;\
+phpize;\
+./configure;\
+apk add build-base;\
+./configure;\
+make;\
+make install;\
+apk del build-base;\

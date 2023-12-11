@@ -1,0 +1,42 @@
+version: "1.0.0"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pejmanhkh/nginx-php81
+    ports:
+      - "80:80"  
+      - "443:443"  
+    container_name: mynginx
+    volumes:
+      - ./nginx/:/etc/nginx/
+      - ./php81/:/etc/php81/
+      - ./home/:/home/
+      - ./log/:/var/log/
+      - ./php81/sockets/:/usr/local/php81/sockets/
+      - ./data/:/usr/local/data/
+      - ./letsencrypt/:/etc/letsencrypt/
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile    
+    image: pejmanhkh/mariadb
+    ports:
+      - "3306:3306"
+    container_name: mymysql
+    volumes:
+      - ./home/:/home/
+      - ./mysql/lib:/var/lib/mysql
+      - ./mysql/my.cnf.d:/etc/my.cnf.d
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+        MYSQL_DATABASE: test
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 12c
+        MYSQL_ROOT_PASSWORD: 12c

@@ -1,0 +1,20 @@
+version: "1.0.0"
+services:
+  mysql:
+    image: pejmanhkh/mariadb
+    ports:
+      - "3307:3306"
+    container_name: mmysql
+    volumes:
+      - ./mysql/lib:/var/lib/mysql
+      - ./mysql/my.cnf.d:/etc/my.cnf.d
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+        MYSQL_DATABASE: mysql
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 12c
+        MYSQL_ROOT_PASSWORD: 12c
+    networks: 
+        - default

@@ -4,19 +4,51 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: pejmanhkh/nginx-php81
+    image: pejmanhkh/nginx
     ports:
       - "80:80"  
       - "443:443"  
     container_name: mynginx
     volumes:
       - ./nginx/:/etc/nginx/
-      - ./php81/:/etc/php81/
       - ./home/:/home/
       - ./log/:/var/log/
-      - ./php81/sockets/:/usr/local/php81/sockets/
+      - ./sockets/:/usr/local/sockets/
       - ./data/:/usr/local/data/
       - ./letsencrypt/:/etc/letsencrypt/
+      - /etc/passwd:/etc/passwd
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  
+  php81:
+    build:
+      context: ./php81
+      dockerfile: Dockerfile
+    image: pejmanhkh/php81
+    container_name: myphp81
+    volumes:
+      - ./home/:/home/
+      - ./php81/:/etc/php81/
+      - ./log/:/var/log/
+      - ./sockets/:/usr/local/sockets/
+      - ./data/:/usr/local/data/
+      - /etc/passwd:/etc/passwd
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  php72:
+    build:
+      context: ./php72
+      dockerfile: Dockerfile
+    image: pejmanhkh/php72
+    container_name: myphp72
+    volumes:
+      - ./home/:/home/
+      - ./php72/:/etc/php7/
+      - ./log/:/var/log/
+      - ./sockets/:/usr/local/sockets/
+      - ./data/:/usr/local/data/
+      - /etc/passwd:/etc/passwd
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -32,6 +64,7 @@ services:
       - ./home/:/home/
       - ./mysql/lib:/var/lib/mysql
       - ./mysql/my.cnf.d:/etc/my.cnf.d
+      - /etc/passwd:/etc/passwd
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"

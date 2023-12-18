@@ -1,15 +1,17 @@
 chmod 0777 -R home/pma/tmp/
 read -p 'Username: ' user
 read -p 'Domain without www: ' domain
+read -p 'Which php version: ' phpversion
+
 echo $user : $domain;
 mkdir -p home/$user/$domain;
-(cd home/$user/$domain/ && ln -s $user/public public_html)
 mkdir -p home/$user/tmp
-cp php81/sample/domain.ir.conf php81/php-fpm.d/$domain.conf
-sed -i 's\usersample\'"$user"'\g' php81/php-fpm.d/$domain.conf
+cp $phpversion/sample/domain.ir.conf $phpversion/php-fpm.d/$domain.conf
+sed -i 's\usersample\'"$user"'\g' $phpversion/php-fpm.d/$domain.conf
 cp nginx/sample/domain.ir.conf nginx/http.d/$domain.conf
 sed -i 's\domain.ir\'"$domain"'\g' nginx/http.d/$domain.conf
 sed -i 's\usersample\'"$user"'\g' nginx/http.d/$domain.conf
+sed -i 's\sockets/php81\sockets/'"$phpversion"'\g' nginx/http.d/$domain.conf
 
 mkdir -p letsencrypt/live/$domain/
 

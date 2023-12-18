@@ -1,5 +1,5 @@
 build:
-	sudo docker build -t pejmanhkh/nginx-php81 .
+	sudo docker build -t pejmanhkh/nginx .
 run:
 	sudo docker compose up
 up:
